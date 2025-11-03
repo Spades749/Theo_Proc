@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f17399cb59b34f6ca66b47b4c2a26722, type: 3}
   m_Name: Simple Room Placement
   m_EditorClassIdentifier: 
-  _maxSteps: 1000
-  _maxRooms: 5
-  _roomMinSize: {x: 12, y: 16}
-  _roomMaxSize: {x: 15, y: 20}
+  _maxSteps: 10
+  _maxRooms: 20
+  _roomMinSize: {x: 4, y: 4}
+  _roomMaxSize: {x: 8, y: 8}
+  _spacing: 2

@@ -412,7 +412,7 @@ MonoBehaviour:
   _startPosition: {x: 0, y: 0, z: 0}
   _generationMethod: {fileID: 11400000, guid: 6d039395dd02e94468596c445c26d26a, type: 2}
   _drawDebug: 0
-  _seed: 1234
+  _seed: 12345
   _stepDelay: 200
 --- !u!4 &1922166660
 Transform:
