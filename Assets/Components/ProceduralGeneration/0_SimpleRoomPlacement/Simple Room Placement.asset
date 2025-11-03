@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f17399cb59b34f6ca66b47b4c2a26722, type: 3}
+  m_Name: Simple Room Placement
+  m_EditorClassIdentifier: 
+  _maxSteps: 1000
+  _maxRooms: 5
+  _roomMinSize: {x: 12, y: 16}
+  _roomMaxSize: {x: 15, y: 20}
