@@ -9,11 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f17399cb59b34f6ca66b47b4c2a26722, type: 3}
-  m_Name: Simple Room Placement
+  m_Script: {fileID: 11500000, guid: 441091665700b924099bcb128e4501df, type: 3}
+  m_Name: New Bsp
   m_EditorClassIdentifier: 
   _maxSteps: 100
-  maxRooms: 50
+  numberOfSplits: 5
   roomMinSize: {x: 2, y: 2}
-  roomMaxSize: {x: 10, y: 10}
-  spacing: 2
+  roomMaxSize: {x: 6, y: 6}
