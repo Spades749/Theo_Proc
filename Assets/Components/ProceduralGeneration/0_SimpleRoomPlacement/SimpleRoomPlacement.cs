@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -21,7 +22,7 @@ namespace Components.ProceduralGeneration.SimpleRoomPlacement
         [Header("Map Parameters")]
         [SerializeField] private int spacing = 2;
 
-        private List<RectInt> _rooms = new();
+        [NonSerialized] private List<RectInt> _rooms = new();
 
         protected override async UniTask ApplyGeneration(CancellationToken cancellationToken)
         {
