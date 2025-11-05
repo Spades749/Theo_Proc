@@ -60,20 +60,30 @@ public class BspRoomPlacement : ProceduralGenerationMethod
 
     private RectInt CreateRoomWithin(RectInt bounds)
     {
-        int roomWidth = Mathf.Clamp(
-            RandomService.Range(roomMinSize.x, Mathf.Min(bounds.width, roomMaxSize.x)),
-            1, bounds.width
-        );
-        int roomHeight = Mathf.Clamp(
-            RandomService.Range(roomMinSize.y, Mathf.Min(bounds.height, roomMaxSize.y)),
-            1, bounds.height
-        );
+        if (bounds.width < roomMinSize.x || bounds.height < roomMinSize.y)
+        {
+            Debug.LogWarning($"[BSP] Bounds too small for a room : {bounds}");
+            return bounds;
+        }
 
-        int x = RandomService.Range(bounds.xMin, Mathf.Max(bounds.xMin, bounds.xMax - roomWidth));
-        int y = RandomService.Range(bounds.yMin, Mathf.Max(bounds.yMin, bounds.yMax - roomHeight));
+        int maxRoomWidth = Mathf.Min(bounds.width, roomMaxSize.x);
+        int maxRoomHeight = Mathf.Min(bounds.height, roomMaxSize.y);
+
+        int roomWidth = RandomService.Range(roomMinSize.x, maxRoomWidth + 1);
+        int roomHeight = RandomService.Range(roomMinSize.y, maxRoomHeight + 1);
+
+        int xMax = bounds.xMax - roomWidth;
+        int yMax = bounds.yMax - roomHeight;
+
+        if (xMax <= bounds.xMin) xMax = bounds.xMin + 1;
+        if (yMax <= bounds.yMin) yMax = bounds.yMin + 1;
+
+        int x = RandomService.Range(bounds.xMin, xMax);
+        int y = RandomService.Range(bounds.yMin, yMax);
 
         return new RectInt(x, y, roomWidth, roomHeight);
     }
+
 
     public void PlaceRoom(RectInt room)
     {
@@ -96,7 +106,7 @@ public class BspRoomPlacement : ProceduralGenerationMethod
         int startY = Mathf.Min(from.y, to.y);
         int endY = Mathf.Max(from.y, to.y);
 
-        bool horizontalFirst = RandomService.Range(0, 2) == 0;
+        bool horizontalFirst = RandomService.Range(0, 3) == 0;
 
         if (horizontalFirst)
         {
@@ -197,24 +207,35 @@ public class BspNode
 
     private static RectInt[] SplitContainer(RectInt container)
     {
-        RectInt c1, c2;
-        bool horizontal = Random.Range(0f, 1f) > 0.5f;
+        const int MIN_LEAF_SIZE = 8;
 
-        if (horizontal)
+        bool splitHorizontally;
+
+        if (container.width > container.height && container.width >= 2 * MIN_LEAF_SIZE)
+            splitHorizontally = true;
+        else if (container.height > container.width && container.height >= 2 * MIN_LEAF_SIZE)
+            splitHorizontally = false;
+        else
+            splitHorizontally = Random.value > 0.5f;
+
+        RectInt c1, c2;
+
+        if (splitHorizontally)
         {
-            int splitWidth = Mathf.RoundToInt(container.width * Random.Range(0.4f, 0.6f));
+            int splitWidth = Random.Range(MIN_LEAF_SIZE, container.width - MIN_LEAF_SIZE);
             c1 = new RectInt(container.x, container.y, splitWidth, container.height);
             c2 = new RectInt(container.x + splitWidth, container.y, container.width - splitWidth, container.height);
         }
         else
         {
-            int splitHeight = Mathf.RoundToInt(container.height * Random.Range(0.4f, 0.6f));
+            int splitHeight = Random.Range(MIN_LEAF_SIZE, container.height - MIN_LEAF_SIZE);
             c1 = new RectInt(container.x, container.y, container.width, splitHeight);
             c2 = new RectInt(container.x, container.y + splitHeight, container.width, container.height - splitHeight);
         }
 
         return new[] { c1, c2 };
     }
+
 }
 
 
