@@ -13,3 +13,9 @@ MonoBehaviour:
   m_Name: New Cellular Automata
   m_EditorClassIdentifier: 
   _maxSteps: 20
+  initialFillChance: 0.242
+  useBorderWalls: 1
+  birthThreshold: 4
+  deathThreshold: 3
+  aliveTileName: Grass
+  deadTileName: Rock

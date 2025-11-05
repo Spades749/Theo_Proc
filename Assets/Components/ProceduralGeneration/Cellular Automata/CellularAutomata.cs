@@ -28,11 +28,9 @@ namespace Components.ProceduralGeneration.CellularAutomata
 
         protected override async UniTask ApplyGeneration(CancellationToken cancellationToken)
         {
-            // Initialize the grid state
             InitializeGrid();
             await VisualizeGrid(cancellationToken);
 
-            // Run cellular automata simulation
             for (int step = 0; step < _maxSteps; step++)
             {
                 cancellationToken.ThrowIfCancellationRequested();
@@ -43,7 +41,6 @@ namespace Components.ProceduralGeneration.CellularAutomata
                 await UniTask.Delay(GridGenerator.StepDelay, cancellationToken: cancellationToken);
             }
 
-            // Optional: post-processing
             await PostProcess(cancellationToken);
         }
 
@@ -56,14 +53,12 @@ namespace Components.ProceduralGeneration.CellularAutomata
             {
                 for (int y = 0; y < Grid.Lenght; y++)
                 {
-                    // Border cells are always walls if enabled
                     if (useBorderWalls && (x == 0 || y == 0 || x == Grid.Width - 1 || y == Grid.Lenght - 1))
                     {
-                        _currentState[x, y] = false; // Dead/Wall
+                        _currentState[x, y] = false;
                     }
                     else
                     {
-                        // Random initialization based on fill chance
                         _currentState[x, y] = RandomService.Chance(initialFillChance);
                     }
                 }
@@ -79,10 +74,8 @@ namespace Components.ProceduralGeneration.CellularAutomata
                     int aliveNeighbours = CountAliveNeighbours(x, y);
                     bool currentlyAlive = _currentState[x, y];
 
-                    // Apply cellular automata rules
                     if (currentlyAlive)
                     {
-                        // Cell survives if it has enough neighbours
                         _nextState[x, y] = aliveNeighbours >= deathThreshold;
                     }
                     else
